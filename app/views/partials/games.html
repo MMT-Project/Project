@@ -1,0 +1,14 @@
+<div class="container">
+    <h1 class="text-center">
+        Games
+    </h1>
+    <div class="panel panel-primary inline-panel game-panel" ng-repeat="game in games">
+      <div class="panel-heading">
+        <h2 class="panel-title">{{game.title}}</h2>
+      </div>
+      <div class="panel-body">
+        <div>{{game.description}}</div>
+        <a href="{{game.url}}" class="btn btn-primary btn-lg game-button">Play</a>
+      </div>
+    </div>
+</div>

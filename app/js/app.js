@@ -54,6 +54,10 @@ var app = angular.module('myApp', ['ngRoute', 'ngResource', 'ngCookies']).
                 templateUrl: 'views/partials/unauthorized.html'
                 //controller: 'HomeCtrl'
             })
+            .when('/games', {
+                templateUrl: 'views/partials/games.html',
+                controller: 'gamesCtrl'
+            })
             .otherwise({ redirectTo: '/' });
     }])
     .value('toastr', toastr)

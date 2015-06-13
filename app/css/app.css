@@ -69,6 +69,14 @@ input.ng-dirty.ng-valid.validity {
     width: 100%;
     height: 100%;
 }
+.game-button
+{
+    float: right;
+}
+.game-panel
+{
+    margin-left: 1%;
+}
 .inline-panel
 {
     display: inline-block;

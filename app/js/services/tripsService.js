@@ -43,7 +43,7 @@ app.factory('tripsService', ['$http', '$q', 'identity', 'notifier', 'authorizati
             var headers = authorization.getAuthorizationHeader();
             $http.put(tripsUrl +'/'+id ,{} , { headers: headers })
                 .success(function (data) {
-                    notifier.success("Successfuli joined!");
+                    notifier.success("Successfully joined!");
                     deferred.resolve(data);
                 }).error(function (error) {
                     notifier.error(error['message']);
