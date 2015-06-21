@@ -1,0 +1,9 @@
+[submodule "Games/TicTacToe"]
+	path = Games/TicTacToe
+	url = https://github.com/Mitko-Kerezov/TicTacToe
+[submodule "Games/TheSnake"]
+	path = Games/TheSnake
+	url = https://github.com/sttodorov/TheSnake
+[submodule "Games/Sonic"]
+	path = Games/Sonic
+	url = https://github.com/Mitko-Kerezov/Sonic
