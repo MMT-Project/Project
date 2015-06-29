@@ -61,8 +61,7 @@ var app = angular.module('myApp', ['ngRoute', 'ngResource', 'ngCookies']).
             .otherwise({ redirectTo: '/' });
     }])
     .value('toastr', toastr)
-    .constant('baseServiceUrl', 'http://spa2014.bgcoder.com');
-//    .constant('baseServiceUrl', 'http://localhost:1337');
+    .constant('baseServiceUrl', 'http://localhost:1337');
 
 app.run(function($rootScope, $location) {
     $rootScope.$on('$routeChangeError', function(ev, current, previous, rejection) {
