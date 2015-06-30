@@ -63,6 +63,15 @@ var app = angular.module('myApp', ['ngRoute', 'ngResource', 'ngCookies']).
                 controller: 'profileCtrl',
                 resolve: routeUserChecks.authenticated
             })
+            .when('/gameTTT' ,{
+                templateUrl: 'views/partials/gameTTT.html'
+            })
+            .when('/gameSnake' ,{
+                templateUrl: 'views/partials/gameSnake.html'
+            })
+            .when('/gameSonic' ,{
+                templateUrl: 'views/partials/gameSonic.html'
+            })
             .otherwise({ redirectTo: '/' });
     }])
     .value('toastr', toastr)
