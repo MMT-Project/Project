@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="row text-center">
+        <div class="col-lg-12">
+            <h1>{{currentUser.email}}</h1>
+        </div>
+    </div>
+    <div class="row text-center">
+        <div class="col-lg-6">
+            <h3>{{currentUser.isDriver ? "Driver" : "Passenger"}}</h3>
+        </div>
+        <div class="col-lg-6">
+            <h3>{{currentUser.car ? currentUser.car : "You don't have a car"}}</h3>
+        </div>
+    </div>
+</div>

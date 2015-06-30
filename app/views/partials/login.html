@@ -12,6 +12,9 @@
             <a href="" data-toggle="dropdown" class="dropdown-toggle">{{ identity.getCurrentUser().userName }}<span class="caret"></span></a>
             <ul class="dropdown-menu">
                 <li>
+                    <a href="#/profile" ng-click="info()">Profile</a>
+                </li>
+                <li>
                     <a href="#" ng-click="logout()">Sign Out</a>
                 </li>
             </ul>

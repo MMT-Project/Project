@@ -35,6 +35,17 @@ app.factory('auth', ['$http', '$q', 'identity', 'notifier', 'authorization', 'ba
 
             return deferred.promise;
         },
+        info: function() {
+            var deferred = $q.defer();
+
+            var headers = authorization.getAuthorizationHeader();
+            $http.get(usersApi + '/userInfo', { headers: headers })
+                .success(function(data) {
+                    deferred.resolve(data);
+                });
+
+            return deferred.promise;
+        },
         logout: function() {
             var deferred = $q.defer();
 
