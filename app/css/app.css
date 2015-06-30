@@ -85,7 +85,7 @@ input.ng-dirty.ng-valid.validity {
 .customSelect
 {
     display: inline-block;
-    width:30%;
+    width:80%;
 }
 .pager{
     margin: 0;
@@ -121,4 +121,10 @@ background-size: cover;
 
 .overlay h1,h2{
   color:#fff;
+}#map-canvas {
+  min-height: 300px;
+  width: 50%;
 }
+form[name=signUpForm] {
+  height: 100%;
+} 
