@@ -22,6 +22,8 @@
     using TripExchange.Web.Models.Users;
     using TripExchange.Web.Providers;
     using TripExchange.Web.Results;
+    using System.IO;
+    using System.Web.Hosting;
 
     [Authorize]
     [RoutePrefix("api/users")]
@@ -69,7 +71,7 @@
                 return Request.GetOwinContext().Authentication;
             }
         }
-        
+
         // POST api/Users/Register
         [AllowAnonymous]
         [Route("Register")]
@@ -90,7 +92,7 @@
                 UserName = model.Email,
                 Email = model.Email,
                 IsDriver = model.IsDriver,
-                Car = model.Car
+                Car = model.Car,
             };
 
             IdentityResult result = await this.UserManager.CreateAsync(user, model.Password);
@@ -103,14 +105,58 @@
             return this.Ok();
         }
 
+        public class PhotoMultipartFormDataStreamProvider : MultipartFormDataStreamProvider
+        {
+
+            public PhotoMultipartFormDataStreamProvider(string path)
+                : base(path)
+            {
+            }
+
+            public override string GetLocalFileName(System.Net.Http.Headers.HttpContentHeaders headers)
+            {
+                //Make the file name URL safe and then use it & is the only disallowed url character allowed in a windows filename 
+                var name = !string.IsNullOrWhiteSpace(headers.ContentDisposition.FileName) ? headers.ContentDisposition.FileName : "NoName";
+                return name.Trim(new char[] { '"' })
+                            .Replace("&", "and");
+            }
+        }
+
+        [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
+        [Route("AddPhoto")]
+        [HttpPost]
+        public async Task AddPhoto(HttpRequestMessage request)
+        {
+            var mappedPath = HostingEnvironment.MapPath("~/Images");
+            var currentUserId = User.Identity.GetUserId();
+            var provider = new PhotoMultipartFormDataStreamProvider(mappedPath);
+            var imageName = Guid.NewGuid().ToString();
+            await request.Content.ReadAsMultipartAsync(provider);
+
+            foreach (var file in provider.FileData)
+            {
+                var imagePath = Path.Combine(mappedPath, imageName + Path.GetExtension(file.LocalFileName));
+                File.Move(file.LocalFileName, imagePath);
+
+                var db = new ApplicationDbContext();
+                db.Images.Add(new Image()
+                {
+                    FilePath = Path.Combine("Images", imageName + Path.GetExtension(file.LocalFileName)),
+                    UserId = currentUserId,
+                });
+
+                db.SaveChanges();
+            }
+        }
+
         // GET api/Users/UserInfo
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
         [Authorize]
-        public IHttpActionResult GetUserInfo()
+        public IHttpActionResult GetUserInfo(string email)
         {
             var externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
-            var email = User.Identity.GetUserName();
+            email = string.IsNullOrEmpty(email) || email == "undefined" ? User.Identity.GetUserName() : email;
 
             var db = new ApplicationDbContext();
             var user = db.Users.FirstOrDefault(x => x.UserName == email);
@@ -127,6 +173,7 @@
                             Email = email,
                             IsDriver = user.IsDriver,
                             Car = user.Car,
+                            Images = user.Images.Select(i => i.FilePath)
                         });
         }
 
@@ -137,7 +184,7 @@
             this.Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
             return this.Ok();
         }
-        
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -159,7 +206,7 @@
                 return null;
             }
 
-           var logins = new List<UserLoginInfoViewModel>();
+            var logins = new List<UserLoginInfoViewModel>();
 
             foreach (IdentityUserLogin linkedAccount in user.Logins)
             {

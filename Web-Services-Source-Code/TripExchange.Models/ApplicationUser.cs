@@ -12,16 +12,24 @@
     {
         private ICollection<Trip> trips;
         private ICollection<Trip> tripsWhereDriver;
+        private ICollection<Image> images;
 
         public ApplicationUser()
         {
             this.trips = new HashSet<Trip>();
             this.tripsWhereDriver = new HashSet<Trip>();
+            this.images = new HashSet<Image>();
         }
 
         public bool IsDriver { get; set; }
 
         public string Car { get; set; }
+
+        public virtual ICollection<Image> Images
+        {
+            get { return this.images; }
+            set { this.images = value; }
+        }
 
         public virtual ICollection<Trip> Trips
         {

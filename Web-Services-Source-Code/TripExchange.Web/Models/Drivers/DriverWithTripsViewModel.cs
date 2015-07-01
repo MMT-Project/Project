@@ -19,5 +19,7 @@
         public int NumberOfTotalTrips { get; set; }
 
         public IEnumerable<TripInfoViewModel> Trips { get; set; }
+
+        public IEnumerable<string> Images { get; set; }
     }
 }

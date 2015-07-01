@@ -9,6 +9,9 @@ namespace TripExchange.Data.Migrations
     using Microsoft.AspNet.Identity.EntityFramework;
 
     using TripExchange.Models;
+    using TripExchange.Common;
+    using System.IO;
+    using System.Reflection;
 
     public sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
@@ -30,9 +33,12 @@ namespace TripExchange.Data.Migrations
             var users = this.SeedApplicationUsers(context);
 
             var cities = this.SeedCities(context);
+            context.SaveChanges();
 
             this.SeedTrips(context, random, users, cities);
+            context.SaveChanges();
 
+            this.SeedImages(context, users);
             context.SaveChanges();
         }
 
@@ -153,6 +159,20 @@ namespace TripExchange.Data.Migrations
             }
 
             return users;
+        }
+
+        private void SeedImages(ApplicationDbContext context, List<ApplicationUser> users)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                var image = new Image 
+                {
+                    UserId = users[i].Id,
+                    FilePath = Path.Combine("Images", "user.png"),
+                };
+
+                context.Images.Add(image);
+            }
         }
 
         private IList<T> Shuffle<T>(IList<T> list, Random randomGenerator)

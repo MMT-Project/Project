@@ -28,7 +28,7 @@ namespace TripExchange.Web
                     {
                         if (request.Path.StartsWithSegments(new PathString(TokenEndpointPath)))
                         {
-                            return Task.FromResult(new CorsPolicy { AllowAnyOrigin = true });
+                            return Task.FromResult(new CorsPolicy { AllowAnyOrigin = true, AllowAnyHeader = true, AllowAnyMethod = true});
                         }
 
                         return Task.FromResult<CorsPolicy>(null);

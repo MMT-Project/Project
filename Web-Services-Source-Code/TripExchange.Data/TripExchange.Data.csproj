@@ -62,6 +62,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\TripExchange.Common\TripExchange.Common.csproj">
+      <Project>{66158f75-1774-4a77-81db-540ad9f3e5b4}</Project>
+      <Name>TripExchange.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\TripExchange.Models\TripExchange.Models.csproj">
       <Project>{A3E05C27-E8F6-4510-B9C5-7D2DDE3B6AED}</Project>
       <Name>TripExchange.Models</Name>

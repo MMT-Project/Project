@@ -35,11 +35,12 @@ app.factory('auth', ['$http', '$q', 'identity', 'notifier', 'authorization', 'ba
 
             return deferred.promise;
         },
-        info: function() {
+        info: function(email) {
             var deferred = $q.defer();
 
             var headers = authorization.getAuthorizationHeader();
-            $http.get(usersApi + '/userInfo', { headers: headers })
+            console.log(usersApi + '/userInfo?email=' + email);
+            $http.get(usersApi + '/userInfo?email=' + email, { headers: headers })
                 .success(function(data) {
                     deferred.resolve(data);
                 });

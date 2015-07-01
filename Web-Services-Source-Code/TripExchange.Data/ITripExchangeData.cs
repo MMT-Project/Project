@@ -10,6 +10,8 @@
 
         IRepository<City> Cities { get; }
 
+        IRepository<Image> Images { get; }
+
         int SaveChanges();
     }
 }

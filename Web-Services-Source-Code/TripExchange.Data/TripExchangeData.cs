@@ -47,6 +47,14 @@
             }
         }
 
+        public IRepository<Image> Images
+        {
+            get
+            {
+                return this.GetRepository<Image>();
+            }
+        }
+
         public int SaveChanges()
         {
             return this.context.SaveChanges();

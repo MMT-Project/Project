@@ -12,4 +12,11 @@
             <h3>{{currentUser.car ? currentUser.car : "You don't have a car"}}</h3>
         </div>
     </div>
+    
+    <ng-include src="'views/partials/galleryPartial.html'"></ng-include>
+    <br/>
+    <div>
+            <input id="fileInput" type="file" ng-model="file1" >
+            <button class="btn btn-primary" ng-click="uploadFile(file1)"> Upload</button>
+    </div>
 </div>
