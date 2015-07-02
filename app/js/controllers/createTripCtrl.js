@@ -19,9 +19,7 @@ app.controller('createTripCtrl', ['$scope', 'identity','notifier','tripsService'
             position: map.getCenter(),
             map: null,
             title: 'Click to zoom'
-        }),
-        fromSelect = document.getElementById('from'),
-        toSelect = document.getElementById('to');
+        });
 
     function initialize() {
         google.maps.event.addListener(map, 'click', function(event) {
@@ -81,23 +79,28 @@ app.controller('createTripCtrl', ['$scope', 'identity','notifier','tripsService'
     }
 
     function setMarkerToNearestTown(object) {
+        var deferred = $q.defer();
         geocoder.geocode({'address': object.city + ', Bulgaria'}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK && results[0]) {
                 if (object.setFrom) {
                     fromMarker.position = new google.maps.LatLng(results[0].geometry.location.A, results[0].geometry.location.F);
                     fromMarker.setMap(map);
-                    fromSelect.value = object.city;
+                    $scope.trip.from = object.city;
                 } else {
                     toMarker.position = new google.maps.LatLng(results[0].geometry.location.A, results[0].geometry.location.F);
                     toMarker.setMap(map);
-                    toSelect.value = object.city;
+                    $scope.trip.to = object.city;
                 }
 
                 if (fromMarker.map && toMarker.map) {
                     calcRoute();
                 }
+
+                deferred.resolve();
             }
         });
+
+        deferred.promise.then();
     }
 
     initialize();
@@ -106,6 +109,7 @@ app.controller('createTripCtrl', ['$scope', 'identity','notifier','tripsService'
         $scope.allCities = data;
     });
 
+    $scope.trip = $scope.trip || {};
     $scope.setMarkerToNearestTown = setMarkerToNearestTown;
     $scope.createTrip = function(trip) {
         var d = new Date();
