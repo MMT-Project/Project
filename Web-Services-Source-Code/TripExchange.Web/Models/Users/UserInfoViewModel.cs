@@ -10,7 +10,5 @@
         public bool IsDriver { get; set; }
 
         public string Car { get; set; }
-
-        public IEnumerable<string> Images { get; set; }
     }
 }

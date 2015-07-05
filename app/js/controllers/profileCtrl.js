@@ -4,21 +4,23 @@ app.controller('profileCtrl', ['$scope', 'identity','notifier', 'auth', 'imageSe
     function($scope, identity, notifier, auth, imageService, baseServiceUrl, $route) {
 
         auth.info().then(function(userData) {
-           for (var index = 0; index < userData.images.length; index++) {
-               userData.images[index] = baseServiceUrl + '/' + userData.images[index];
-           }
-           $scope.currentUser = userData;
-        });
 
-        $scope.uploadFile = function(files) {
+          $scope.currentUser = userData;
+          imageService.getImages($scope.currentUser.email).then(populateImages);
+
+          function populateImages(images) {
+            $scope.images = images;
+          }
+
+          $scope.uploadFile = function(files) {
             var f = document.getElementById('fileInput').files[0],
                 fd = new FormData();
 
-                fd.append("file", f);
-                imageService.addPhoto(fd).then(function() {
-                    imageService.populateImages("").then(function(images) {
-                       $route.reload();
-                    });
-                })
-        };
+            fd.append("file", f);
+            imageService.addPhoto(fd).then(function() {
+                imageService.getImages($scope.currentUser.email).then(populateImages);
+            })
+          };
+        });
+
     }]);

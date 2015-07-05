@@ -1,5 +1,6 @@
 app.factory('imageService', ['$http', '$q','notifier', 'authorization', 'baseServiceUrl', 'auth', function($http, $q, notifier, authorization, baseServiceUrl, auth) {
-    var addPhotoUrl = baseServiceUrl +'/api/users/AddPhoto';
+    var addPhotoUrl = baseServiceUrl +'/api/users/AddPhoto',
+        getPhotos = baseServiceUrl +'/api/images';
 
     return {
         addPhoto: function (photo) {
@@ -17,15 +18,21 @@ app.factory('imageService', ['$http', '$q','notifier', 'authorization', 'baseSer
 
             return deferred.promise;
         },
-        populateImages: function (email) {
-            var deferred = $q.defer();            
-            auth.info(email).then(function(userData) {
-               for (var index = 0; index < userData.images.length; index++) {
-                   userData.images[index] = baseServiceUrl + '/' + userData.images[index];
-               }
-               deferred.resolve(userData.images);
-            });
-            
+        getImages: function (email) {
+            var deferred = $q.defer();
+            var headers = authorization.getAuthorizationHeader();
+            $http.get(getPhotos + '?email=' + email, { headers: headers })
+                .success(function (images) {
+                    for (var index = 0; index < images.length; index++) {
+                        images[index] = baseServiceUrl + '/' + images[index];
+                    }
+                    deferred.resolve(images);
+                }).error(function (error) {
+                    for (var errorMsg in error.ModelState) {
+                        notifier.error(error.ModelState[errorMsg][0]);
+                    }
+                });
+
             return deferred.promise;
         }
     }

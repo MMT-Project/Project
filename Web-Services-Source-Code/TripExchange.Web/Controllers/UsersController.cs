@@ -153,10 +153,9 @@
         [HostAuthentication(DefaultAuthenticationTypes.ExternalBearer)]
         [Route("UserInfo")]
         [Authorize]
-        public IHttpActionResult GetUserInfo(string email)
+        public IHttpActionResult GetUserInfo()
         {
-            var externalLogin = ExternalLoginData.FromIdentity(User.Identity as ClaimsIdentity);
-            email = string.IsNullOrEmpty(email) || email == "undefined" ? User.Identity.GetUserName() : email;
+            var email = User.Identity.GetUserName();
 
             var db = new ApplicationDbContext();
             var user = db.Users.FirstOrDefault(x => x.UserName == email);
@@ -172,8 +171,7 @@
                         {
                             Email = email,
                             IsDriver = user.IsDriver,
-                            Car = user.Car,
-                            Images = user.Images.Select(i => i.FilePath)
+                            Car = user.Car
                         });
         }
 

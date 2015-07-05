@@ -86,8 +86,7 @@
                                                 DepartureDate = trip.DepartureTime,
                                                 NumberOfFreeSeats = trip.AvailableSeats - trip.Passengers.Count,
                                                 IsMine = trip.Passengers.Any(u => u.UserName == currentUserUsername),
-                                            }),
-                                Images = user.Images.Select(i => i.FilePath)
+                                            })
                             })
                     .FirstOrDefault();
 
