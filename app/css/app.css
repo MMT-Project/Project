@@ -127,4 +127,17 @@ background-size: cover;
 }
 form[name=signUpForm] {
   height: 100%;
-} 
+}
+.upload-file-container {
+  margin-bottom: 1%;
+}
+.file-name-container {
+  margin-left: 5%;
+}
+.close {
+  margin-left: 15px;
+}
+.alert {
+  padding: 1px;
+  margin-bottom: 0;
+}

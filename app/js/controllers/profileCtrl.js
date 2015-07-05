@@ -2,9 +2,12 @@
 
 app.controller('profileCtrl', ['$scope', 'identity','notifier', 'auth', 'imageService', 'baseServiceUrl', '$route',
     function($scope, identity, notifier, auth, imageService, baseServiceUrl, $route) {
+        function removeFile() {
+          $scope.fileObject = {};
+          document.getElementById('fileInput').value = "";
+        }
 
         auth.info().then(function(userData) {
-
           $scope.currentUser = userData;
           imageService.getImages($scope.currentUser.email).then(populateImages);
 
@@ -20,7 +23,10 @@ app.controller('profileCtrl', ['$scope', 'identity','notifier', 'auth', 'imageSe
             imageService.addPhoto(fd).then(function() {
                 imageService.getImages($scope.currentUser.email).then(populateImages);
             })
+
+            removeFile();
           };
         });
 
+        $scope.removeFile = removeFile;
     }]);

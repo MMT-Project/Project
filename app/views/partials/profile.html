@@ -16,7 +16,20 @@
     <ng-include src="'views/partials/galleryPartial.html'"></ng-include>
     <br/>
     <div>
-            <input id="fileInput" type="file" ng-model="file1" >
-            <button class="btn btn-primary" ng-click="uploadFile(file1)"> Upload</button>
-    </div>
+        <div class="upload-file-container row">
+            <div class="btn btn-success fileinput-button pull-left" ng-class="{disabled: disabled}">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Add files...</span>
+                    <input id="fileInput" type="file" file-model="fileObject" accept="image/x-png, image/jpeg, image/gif">
+            </div>
+
+            <div class="alert alert-success file-name-container pull-left" ng-show="fileObject.name">
+                <button type="button" class="close" ng-click="removeFile()">×</button>
+                <strong>{{fileObject.name}}</strong>
+            </div>
+        </div>
+        <div class="row">
+            <button class="btn btn-primary pull-left" ng-click="uploadFile(fileObject)" id="file-upload-wrapper">Upload</button>
+        </div>
+    </div> 
 </div>
