@@ -145,3 +145,11 @@ form[name=signUpForm] {
   width: 300px;
   height: 150px;
 }
+footer {
+  background-image: url("../img/road.jpg");
+  background-size: contain;
+  padding: 20px;
+}
+footer a {
+  color: white;
+}
