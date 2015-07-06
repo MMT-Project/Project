@@ -141,3 +141,7 @@ form[name=signUpForm] {
   padding: 1px;
   margin-bottom: 0;
 }
+#gameImage {
+  width: 300px;
+  height: 150px;
+}
