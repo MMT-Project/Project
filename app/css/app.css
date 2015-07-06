@@ -148,7 +148,8 @@ form[name=signUpForm] {
 footer {
   background-image: url("../img/road.jpg");
   background-size: contain;
-  padding: 20px;
+  padding: 10px;
+  color: white;
 }
 footer a {
   color: white;
