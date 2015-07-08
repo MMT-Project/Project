@@ -124,6 +124,7 @@ app.controller('createTripCtrl', ['$scope', 'identity','notifier','tripsService'
         else{
             tripService.createTrip(trip).then(function(data){
                 console.log(data);
+                $location.path('/trips');
             })
         }
     }

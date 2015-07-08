@@ -11,6 +11,7 @@ app.controller('tripDetailsCtrl', ['$scope', 'identity','tripsService','$routePa
     $scope.joinTrip = function()
     {
         tripService.joinTrip($routeParams.id).then(function(data){
+                $location.path('/trips');
         })
     }
 }]);
